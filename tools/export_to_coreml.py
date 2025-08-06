@@ -557,7 +557,7 @@ def main():
     parser = argparse.ArgumentParser(description="Export EdgeTAM to CoreML using torch.jit.script")
     parser.add_argument("--sam2_cfg", required=True, help="Path to EdgeTAM config file")
     parser.add_argument("--sam2_checkpoint", required=True, help="Path to EdgeTAM checkpoint")
-    parser.add_argument("--output_dir", default="./coreml_models_scripted", help="Output directory for CoreML models")
+    parser.add_argument("--output_dir", default="./coreml_models", help="Output directory for CoreML models")
     parser.add_argument("--validate", action="store_true", help="Validate exported models")
     parser.add_argument("--test_image", help="Path to test image for validation")
     parser.add_argument("--compute_units", choices=["ALL", "CPU_ONLY", "CPU_AND_GPU", "CPU_AND_NE"], 
