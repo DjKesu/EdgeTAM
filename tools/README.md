@@ -37,10 +37,7 @@ Note: by default, the `vos_inference.py` script above assumes that all objects t
 
 ### CoreML Export for iOS/macOS Deployment
 
-Two scripts are available for exporting EdgeTAM models to CoreML format:
-
-#### 1. `export_to_coreml.py` (Recommended)
-Standard export using `torch.jit.trace`. Most reliable approach.
+The `export_to_coreml.py` script exports EdgeTAM models to CoreML format for on-device inference.
 
 ```bash
 # Install CoreML dependencies
@@ -54,26 +51,14 @@ python ./tools/export_to_coreml.py \
   --validate
 ```
 
-#### 2. `export_to_coreml_hybrid.py` (Experimental)
-Hybrid script/trace approach that attempts to better handle dynamic behavior.
-
-```bash
-python ./tools/export_to_coreml_hybrid.py \
-  --sam2_cfg sam2/configs/edgetam.yaml \
-  --sam2_checkpoint ./checkpoints/edgetam.pt \
-  --output_dir ./coreml_models_hybrid \
-  --validate
-```
-
-Both scripts create three CoreML models optimized for on-device inference:
+The script creates three CoreML models optimized for on-device inference:
 - `edgetam_image_encoder.mlpackage` - Processes input images to feature embeddings
 - `edgetam_prompt_encoder.mlpackage` - Handles user prompts (points, boxes, masks)
 - `edgetam_mask_decoder.mlpackage` - Generates segmentation masks from features and prompts
 
 **Important Notes:**
 - Use EdgeTAM config (`sam2/configs/edgetam.yaml`) - SAM 2.1 configs fail due to unsupported bicubic interpolation
-- Both scripts produce identical output structure
-- The hybrid approach falls back to tracing due to model architecture constraints
+- The script uses a hybrid script/trace approach that falls back to tracing for compatibility
 
 Optional arguments:
 - `--compute_units {ALL,CPU_ONLY,CPU_AND_GPU,CPU_AND_NE}` - Target compute units (default: ALL)
